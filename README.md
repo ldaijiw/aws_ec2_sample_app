@@ -81,8 +81,17 @@ After copying all the necessary code into JS run the ``environment/app/provision
 
 The ``proxy_config.conf`` file must be edited to have the public ip address of the instance.
 
+**APP RUNNING ON PORT 3000**
+![](images/app3000.png)
+
+**APP RUNNING ON PORT 80**
+![](images/app80.png)
+
+
+Can also check if the app is running on port 3000 on the instance private ip with ``curl``
+
 ```bash
-$ curl <public ip>
+$ curl <private IP>:3000
 
 <!DOCTYPE html>
 <html>
