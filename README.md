@@ -4,10 +4,6 @@
 
 Cloud computing is the on-demand availability of computer system resources, especially data storage (cloud storage) and computing power, without direct active management by the user.
 
-### Cloud Computing vs On-Site
-
-Running
-
 **DevOps and the Cloud**
 
 - Will make sure we use cloud to our advantage
@@ -18,10 +14,7 @@ Running
 		- Amazon responsible for security of the cloud (mostly physical)
 		- User is responsible for security inside your cloud and how it interacts with the outside
 
-## CapEx vs. OpEx
-
-Capital Expenditure vs. Operational Expenditure
-
+**Capital Expenditure vs. Operational Expenditure**
 
 ## AWS
 
@@ -40,3 +33,19 @@ AWS offer infrastructure technologies like compute, storage, and databases as we
 ### Security Groups
 
 A security group acts as a virtual firewall for an EC2 instance to control inbound and outbound traffic
+- Security groups act at the instance level, not subnet level, therefore each instance within a subnet can be assigned to a different set of security groups
+- For each security group, add rules that control the inbound traffic to instances, and a separate set of rules that contorl the outbound traffic
+	- Can specify allow rules, but not deny rules
+	- Can specify separate rules for inbound and outbound traffic
+	- SGs enable to filter traffic based on protocols and port numbers
+	- By default, there are no inbound rules, i.e. no inbound traffic originating from another host to instance is allowed
+	- By default, all outbound traffic is allowed
+
+For this project, there are a few inbound rules that were to be configured:
+| Type | Source | Port | Description |
+| :--: | :----: | :--: | :---------: |
+| SSH | My IP | 22 | Port 22 Home |
+| TCP | My IP | 3000 | Port 3000 Home |
+| HTTP | 0.0.0.0/0 | 80 | Port 80 for everyone |
+
+
