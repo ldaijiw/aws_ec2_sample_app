@@ -79,7 +79,7 @@ scp -i ~/.ssh/private_key_name -r path/to/directory user@PublicIP:/path/to/new/d
 
 After copying all the necessary code into JS run the ``environment/app/provision.sh`` (with the command ``sh``)file to make all essential installations and start the app
 
-The ``proxy_config.conf`` file must be edited to have the public ip address of the instance.
+The ``proxy_config.conf`` file must be edited to have the public ip address of the instance in order for the reverse proxy to have the app running on port 80 to work.
 
 **APP RUNNING ON PORT 3000**
 ![](images/app3000.png)
