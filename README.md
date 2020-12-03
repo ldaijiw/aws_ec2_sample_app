@@ -41,11 +41,82 @@ A security group acts as a virtual firewall for an EC2 instance to control inbou
 	- By default, there are no inbound rules, i.e. no inbound traffic originating from another host to instance is allowed
 	- By default, all outbound traffic is allowed
 
-For this project, there are a few inbound rules that were to be configured:
+For this project, there are a few inbound rules that were to be configured when creating a new security group (involved in the set up of the instance):
 | Type | Source | Port | Description |
 | :--: | :----: | :--: | :---------: |
 | SSH | My IP | 22 | Port 22 Home |
 | TCP | My IP | 3000 | Port 3000 Home |
 | HTTP | 0.0.0.0/0 | 80 | Port 80 for everyone |
 
+The SSH inbound rule is crucial to just have the source as the instance creator's IP, as access to the instance is granted via SSHing in. The only inbound SSH traffic should be the instance creator.
 
+### SSH Keys
+
+At the final stage, the SSH key pair can be created/selected which consists of 
+	- A public key that AWS stores
+	- A private key file (``.pem`` extension) that should be stored in the ``~/.ssh`` directory (**THIS PRIVATE KEY IS ESSENTIAL TO CONNECTING WITH THE INSTANCE**)
+
+**To SSH into the Remote Server**
+
+Find the Public DNS for the instance via _Instances_-->_InstanceName_-->_Connect_-->_SSH Client_
+
+and to SSH in use the command
+```bash
+ssh -i ~/.ssh/private_key_name.pem User@PublicDNS
+```
+
+### Copying files into Instance
+
+Use Secure Copy, ``scp``, to copy files into the remote instance with the following structure
+
+```bash
+scp -i ~/.ssh/private_key_name path/to/file user@PublicIP:/path/to/new/file
+
+scp -i ~/.ssh/private_key_name -r path/to/directory user@PublicIP:/path/to/new/directory
+```
+
+### Running the App in the Instance
+
+After copying all the necessary code into JS run the ``environment/app/provision.sh`` (with the command ``sh``)file to make all essential installations and start the app
+
+The ``proxy_config.conf`` file must be edited to have the public ip address of the instance.
+
+```bash
+$ curl <public ip>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Provisioning Test Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  <style type="text/css">
+    body {
+      text-align:center;
+      font-family: 'Slabo 27px', serif;
+      height:100vh;
+    }
+
+    .vertical-center {
+
+      position:relative;
+      top:50%;
+      transform: translateY(-50%);
+
+    }
+
+    img {
+      width:150px;
+    }
+  </style>
+</head>
+<body>
+  <div class="vertical-center">
+    <h1>The app is running correctly.</h1>
+
+
+    <p>Welcome to the Sparta Test App</p>
+    <img src="/images/logo.png" />
+  </div>
+</body>
+</html>
+```
